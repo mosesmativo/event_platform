@@ -54,6 +54,8 @@ export async function POST(req: Request) {
   // const { id } = evt.data;
   const eventType = evt.type;
 
+
+  // Create a new Webhook if the user has been created successfully
   if(eventType === 'user.created'){
     const {id, email_addresses, image_url, first_name, last_name, username } = evt.data;
 
@@ -77,6 +79,31 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ message: 'OK', user: newUser })
+  }
+
+  // Update the user on MongoDB if clerk has updated the user metadata
+  if(eventType === 'user.updated'){
+    const {id, image_url, first_name, last_name, username } = evt.data
+
+    const user = {
+      firstName: first_name,
+      lastName: last_name,
+      username: username!,
+      photo: image_url,
+    }
+
+    const updatedUser = await updateUser(id, user)
+
+    return NextResponse.json({ message: 'OK', user: updatedUser })
+  }
+
+  // Update our database if the user has been deleted
+  if (eventType === 'user.deleted') {
+    const { id } = evt.data
+
+    const deletedUser = await deleteUser(id!)
+
+    return NextResponse.json({ message: 'OK', user: deletedUser })
   }
  
   return new Response('', { status: 200 })
