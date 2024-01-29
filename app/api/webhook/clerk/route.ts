@@ -64,7 +64,7 @@ export async function POST(req: Request) {
       photo: image_url,
     }
 
-    console.log(`The User id is: ${id} and userName is: ${username}: lastName is: ${last_name}`);
+    console.log(`clerkId: ${id} UserName: ${username}: LastName: ${last_name} : Email ${email_addresses} : Photo: ${image_url} :LastFirst: ${first_name}`);
   }
  
   return new Response('', { status: 200 })
