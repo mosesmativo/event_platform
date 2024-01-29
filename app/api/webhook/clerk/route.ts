@@ -58,13 +58,13 @@ export async function POST(req: Request) {
     const user = {
       clerkId: id,
       email: email_addresses[0].email_address,
-      username: username,
+      userName: username,
       firstName: first_name,
       lastName: last_name,
       photo: image_url,
     }
 
-    console.log(`The User is: ${user}`);
+    console.log(`The User id is: ${id} and userName is: ${username}: lastName is: ${last_name}`);
   }
  
   return new Response('', { status: 200 })
