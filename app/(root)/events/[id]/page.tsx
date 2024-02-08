@@ -75,9 +75,14 @@ const EventDetails = async ({ params: { id } }: SearchParamProps) => {
       </div>
       
       <Collections
-      
-      
-      />
+          data={[]}
+          emptyTitle="No Events Found"
+          emptyStateSubtext="Come back later"
+          collectionType="All_Events"
+          limit={6}
+          page={1}
+          totalPages={10}
+        />
     </section>
     </>
   )

@@ -39,7 +39,7 @@ function Card({event, hasOrderLink, hasPrice}: CardPropsType) {
                         height={20}
                     />
                 </Link>
-                
+
             </div>
         )}
 
@@ -63,6 +63,7 @@ function Card({event, hasOrderLink, hasPrice}: CardPropsType) {
             <div className="flex-between w-full">
                 <p className='p-medium-12 md:p-medium-14 text-grey-600'>
                     {event.organizer.firstName}
+                    {' '}
                     {event.organizer.lastName}
                 </p>
 
