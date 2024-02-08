@@ -4,6 +4,7 @@ import { auth } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import { DeleteConfirmation } from './DeleteConfirmation'
 
 type CardPropsType ={
     event: IEvent,
@@ -28,7 +29,7 @@ function Card({event, hasOrderLink, hasPrice}: CardPropsType) {
 
         {/* IS EVENT CREATOR  */}
         {isEventCreator && !hasPrice && (
-            <div className='absolute right-2 top-2 flex flex-col gap-4 rounded-xl bg-white shadow-sm transition-all'>
+            <div className='absolute right-2 top-2 flex flex-col gap-4 rounded-xl bg-white p-3 shadow-sm transition-all'>
                 <Link
                  href={`/events/${event._id}/update`}
                 >
@@ -39,7 +40,7 @@ function Card({event, hasOrderLink, hasPrice}: CardPropsType) {
                         height={20}
                     />
                 </Link>
-
+                <DeleteConfirmation eventId={event._id}/>
             </div>
         )}
 
