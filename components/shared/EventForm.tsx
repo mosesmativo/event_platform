@@ -19,10 +19,13 @@ import { Checkbox } from "../ui/checkbox"
 import { useUploadThing } from "@/lib/uploadthing"
 import { useRouter } from "next/navigation"
 import { createEvent } from "@/lib/actions/event.actions"
+import { IEvent } from "@/lib/database/models/event.model"
 
 type EventFormType = {
     userId: string,
     type: 'create' | 'update',
+    event?: IEvent,
+    eventId?: string
 }
 
 function EventForm({ userId, type }: EventFormType) {
