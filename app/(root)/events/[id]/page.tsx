@@ -1,14 +1,18 @@
-import { getEventById } from '@/lib/actions/event.actions'
-import { SearchParamProps } from '@/types'
-import { formatDateTime } from '@/lib/utils';
-import Image from 'next/image';
-import React from 'react'
+// import CheckoutButton from '@/components/shared/CheckoutButton';
 import Collections from '@/components/shared/Collections';
+import { getEventById, getRelatedEventsByCategory } from '@/lib/actions/event.actions'
+import { formatDateTime } from '@/lib/utils';
+import { SearchParamProps } from '@/types'
+import Image from 'next/image';
 
-const EventDetails = async ({ params: { id } }: SearchParamProps) => {
-
+const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) => {
   const event = await getEventById(id);
-  console.log(event);
+
+  const relatedEvents = await getRelatedEventsByCategory({
+    categoryId: event.category._id,
+    eventId: event._id,
+    page: searchParams.page as string,
+  })
 
   return (
     <>
@@ -48,7 +52,7 @@ const EventDetails = async ({ params: { id } }: SearchParamProps) => {
           <div className="flex flex-col gap-5">
             <div className='flex gap-2 md:gap-3'>
               <Image src="/assets/icons/calendar.svg" alt="calendar" width={32} height={32} />
-              <div className="p-medium-14 lg:p-regular-16 flex flex-wrap items-center gap-2">
+              <div className="p-medium-16 lg:p-regular-20 flex flex-wrap items-center">
                 <p>
                   {formatDateTime(event.startDateTime).dateOnly} - {' '}
                   {formatDateTime(event.startDateTime).timeOnly}
@@ -62,7 +66,7 @@ const EventDetails = async ({ params: { id } }: SearchParamProps) => {
 
             <div className="p-regular-20 flex items-center gap-3">
               <Image src="/assets/icons/location.svg" alt="location" width={32} height={32} />
-              <p className="p-medium-14 lg:p-regular-16">{event.location}</p>
+              <p className="p-medium-16 lg:p-regular-20">{event.location}</p>
             </div>
           </div>
 
@@ -73,15 +77,20 @@ const EventDetails = async ({ params: { id } }: SearchParamProps) => {
           </div>
         </div>
       </div>
-      
-      <Collections
-          data={[]}
+    </section>
+
+    {/* EVENTS with the same category */}
+    <section className="wrapper my-8 flex flex-col gap-8 md:gap-12">
+      <h2 className="h2-bold">Related Events</h2>
+
+      <Collections 
+          data={relatedEvents?.data}
           emptyTitle="No Events Found"
           emptyStateSubtext="Come back later"
           collectionType="All_Events"
-          limit={6}
-          page={1}
-          totalPages={10}
+          limit={3}
+          page={searchParams.page as string}
+          totalPages={relatedEvents?.totalPages}
         />
     </section>
     </>
