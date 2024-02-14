@@ -37,7 +37,7 @@ function Collections({
                         <li key={event._id} className='flex justify-center'>
                             <Card 
                                 event={event}
-                                hasPrice={hasPrice}
+                                hidePrice={hasPrice}
                                 hasOrderLink={hasOrderLink}
                             />
                         </li>
