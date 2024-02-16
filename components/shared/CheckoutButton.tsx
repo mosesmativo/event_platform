@@ -30,7 +30,7 @@ function CheckoutButton({ event }: { event: IEvent }) {
           </SignedOut>
 
           <SignedIn>
-            <CheckOut />
+            <CheckOut event={event} userId={userId} />
           </SignedIn>
         </>
       )}
