@@ -29,7 +29,7 @@ export default function RootLayout({
         <body className={poppins.variable}>
           <ThemeProvider
             attribute="class"
-            defaultTheme="Light"
+            defaultTheme="light"
             disableTransitionOnChange>
             {children}
           </ThemeProvider>
